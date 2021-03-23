@@ -44,9 +44,10 @@ function render(path) {
     }
 }
 
-function timeout(){
+function timeout() {
+    document.getElementById("list").innerHTML = '<div class="mdui-progress"><div class="mdui-progress-indeterminate"></div></div>';
     var timeout;
-    var delay = 2000;
+    var delay = 1500;
     if(timeout) {
         clearTimeout(timeout);
     }
