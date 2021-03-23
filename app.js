@@ -60,7 +60,6 @@ function globalsearch() {
     var input, filter;
     input = document.getElementById("searchinput");
     filter = input.value;
-    console.log(filter);
       $.post(path, '{"inputvalue":"' + filter + '"}', function (data, status) {
         var obj = jQuery.parseJSON(data);
         if (typeof obj != 'null' && obj.hasOwnProperty('error') && obj.error.code == '401') {
