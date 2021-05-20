@@ -1,7 +1,7 @@
 var authConfig = {
     "siteName": "", // 网站名称
     "root_pass": "",  // 根目录密码，优先于.password
-    "version" : "1.0.6", // 程序版本
+    "version" : "1.4.3", // 程序版本
     "theme" : "material", // material  classic 
     "client_id": "",
     "client_secret": "",
@@ -29,7 +29,7 @@ var html = `
   <meta property="og:image" content="https://raw.githubusercontent.com/RyanL-29/aniopen/master/aniiconw.png">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.3/app.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@${this.authConfig.version}/app.min.js"></script>
   <script>
   /*Share Copy */
     function copyURI(evt) {
@@ -146,7 +146,7 @@ body {overflow: overlay;}
   </style>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.3/index.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen@${this.authConfig.version}/index.js"></script>
 </body>
 </html>
 `;
