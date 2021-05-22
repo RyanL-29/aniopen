@@ -733,8 +733,8 @@ function printlogo() {
 
 
 $(function () {
-    init();
-    printlogo();
+    //init();
+    //printlogo();
     var path = window.location.pathname;
     $("body").on("click", '.folder', function () {
         var url = $(this).attr('href');
