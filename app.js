@@ -1,12 +1,12 @@
 document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
 document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/ionicons@2.0.1/css/ionicons.min.css">');
-document.write('<link rel="manifest" href="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.7/manifest.json">');
+document.write('<link rel="manifest" href="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.8/manifest.json">');
 document.write('<link rel="apple-touch-icon" href="//cdn.jsdelivr.net/gh/RyanL-29/aniopen/pwa_icon/192x192nt.png">');
 // markdown支持
 document.write('<script src="//cdn.jsdelivr.net/npm/markdown-it@10.0.0/dist/markdown-it.min.js"></script>');
 // DPlayer API
-document.write('<script src="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.7/DPlayer.min.js"></script>');
+document.write('<script src="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.8/DPlayer.min.js"></script>');
 document.write('<style>.mdui-appbar .mdui-toolbar{height:56px;font-size:1pc}.mdui-toolbar>*{padding:0 6px;margin:0 2px}.mdui-toolbar>i{opacity:.5}.mdui-toolbar>.mdui-typo-headline{padding:0 1pc 0 0}.mdui-toolbar>i{padding:0}.mdui-toolbar>a:hover,a.active,a.mdui-typo-headline{opacity:1}.mdui-container{max-width:980px}.mdui-list-item{transition:none}.mdui-list>.th{background-color:initial}.mdui-list-item>a{width:100%;line-height:3pc}.mdui-list-item{margin:2px 0;padding:0}.mdui-toolbar>a:last-child{opacity:1}@media screen and (max-width:980px){.mdui-list-item .mdui-text-right{display:none}.mdui-container{width:100%!important;margin:0}.mdui-toolbar>.mdui-typo-headline,.mdui-toolbar>a:last-child,.mdui-toolbar>i:first-child{display:block}}</style>');
 
 // 初始化页面，并载入必要资源
@@ -96,6 +96,7 @@ function title(path) {
 // 渲染 DMCA
 function dmca() {
     nav("/DMCA");
+    window.history.pushState('DMCA', 'Open ANi', '/DMCA');
     var content = `
     <h1>網站聲明</h1>
     <p>本網站是以轉載資源的方式運作，對所有資源的真實性、完整性及立場等，不負任何法律責任。本網站亦不承擔使用者將本網站資源用於盈利和/或非法目的之任何後果和/或法律責任。
@@ -123,6 +124,7 @@ function dmca() {
 
 // 渲染 Contact Us
 function contactus() {
+    window.history.pushState('Contact Us', 'Open ANi', '/ContactUs');
     nav("/ContactUs");
     var content = `
     <h1>聯絡我們</h1>
