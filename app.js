@@ -1,12 +1,12 @@
 document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
 document.write('<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/ionicons@2.0.1/css/ionicons.min.css">');
-document.write('<link rel="manifest" href="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.6/manifest.json">');
+document.write('<link rel="manifest" href="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.7/manifest.json">');
 document.write('<link rel="apple-touch-icon" href="//cdn.jsdelivr.net/gh/RyanL-29/aniopen/pwa_icon/192x192nt.png">');
 // markdown支持
 document.write('<script src="//cdn.jsdelivr.net/npm/markdown-it@10.0.0/dist/markdown-it.min.js"></script>');
 // DPlayer API
-document.write('<script src="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.6/DPlayer.min.js"></script>');
+document.write('<script src="//cdn.jsdelivr.net/gh/RyanL-29/aniopen@1.4.7/DPlayer.min.js"></script>');
 document.write('<style>.mdui-appbar .mdui-toolbar{height:56px;font-size:1pc}.mdui-toolbar>*{padding:0 6px;margin:0 2px}.mdui-toolbar>i{opacity:.5}.mdui-toolbar>.mdui-typo-headline{padding:0 1pc 0 0}.mdui-toolbar>i{padding:0}.mdui-toolbar>a:hover,a.active,a.mdui-typo-headline{opacity:1}.mdui-container{max-width:980px}.mdui-list-item{transition:none}.mdui-list>.th{background-color:initial}.mdui-list-item>a{width:100%;line-height:3pc}.mdui-list-item{margin:2px 0;padding:0}.mdui-toolbar>a:last-child{opacity:1}@media screen and (max-width:980px){.mdui-list-item .mdui-text-right{display:none}.mdui-container{width:100%!important;margin:0}.mdui-toolbar>.mdui-typo-headline,.mdui-toolbar>a:last-child,.mdui-toolbar>i:first-child{display:block}}</style>');
 
 // 初始化页面，并载入必要资源
@@ -19,7 +19,7 @@ function init() {
    
    </div>
 </header>
-<div id="content" class="mdui-container"> 
+<div id="content" class="mdui-container" style="min-height: 100%;"> 
 </div>
 <div class="mdui-dialog" id="dialog">
     <div class="mdui-dialog-title">New Update Available</div>
@@ -27,7 +27,16 @@ function init() {
     <div class="mdui-dialog-actions">
       <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>OK</button>
     </div>
-  </div>`;
+  </div>
+  <footer>
+    <p style="line-height: 0;">ani.rip</p>
+    <div style="line-height: 0;">
+    <p class="footer-ele"><a onclick="contactus()">聯絡我們</a></p><ins></ins>
+    <p class="footer-ele"><a onclick="dmca()">DMCA</a></p>
+    </div>
+    <p class="footer-ele2">本網站只用作交流學習以及試看</p>
+    <p class="footer-ele2">如發現網站有任何非法資源 請立即聯絡我們移除</p>
+    </footer>`;
     $('body').html(html);
 }
 
@@ -48,10 +57,10 @@ function timeout() {
     document.getElementById("list").innerHTML = '<div class="mdui-progress"><div class="mdui-progress-indeterminate"></div></div>';
     var timeout;
     var delay = 1500;
-    if(timeout) {
+    if (timeout) {
         clearTimeout(timeout);
     }
-    timeout = setTimeout(function(){
+    timeout = setTimeout(function () {
         globalsearch()
     }, delay);
 }
@@ -61,7 +70,7 @@ function globalsearch() {
     var input, filter;
     input = document.getElementById("searchinput");
     filter = input.value;
-      $.post(path, '{"inputvalue":"' + filter + '"}', function (data, status) {
+    $.post(path, '{"inputvalue":"' + filter + '"}', function (data, status) {
         var obj = jQuery.parseJSON(data);
         if (typeof obj != 'null' && obj.hasOwnProperty('error') && obj.error.code == '401') {
             var pass = prompt("Require a private token", "");
@@ -74,7 +83,7 @@ function globalsearch() {
         } else if (typeof obj != 'null') {
             list_files(obj.foldername, obj.files);
         }
-      })
+    })
 }
 
 
@@ -82,6 +91,45 @@ function globalsearch() {
 function title(path) {
     path = decodeURI(path);
     //$('title').html(document.siteName+' - '+path);
+}
+
+// 渲染 DMCA
+function dmca() {
+    nav("/DMCA");
+    var content = `
+    <h1>網站聲明</h1>
+    <p>本網站是以轉載資源的方式運作，對所有資源的真實性、完整性及立場等，不負任何法律責任。本網站亦不承擔使用者將本網站資源用於盈利和/或非法目的之任何後果和/或法律責任。
+    本網站資源皆從網上搜集轉載，不承擔任何技術及版權問題。
+    下載鏈接僅供寬帶測試研究用途,請下載後在24小時內刪除,請勿用於商業目的。</p>
+    <hr/>
+    <h1>DMCA policy</h1>
+    <p>This Digital Millennium Copyright Act policy (&quot;Policy&quot;) applies to the <a target="_blank" rel="nofollow" href="https://open.ani.rip">open.ani.rip</a> website (&quot;Website&quot;), &quot;Open ANi&quot; mobile application (&quot;Mobile Application&quot;) and any of their related products and services (collectively, &quot;Services&quot;) and outlines how this Website operator and Mobile Application developer (&quot;Operator&quot;, &quot;we&quot;, &quot;us&quot; or &quot;our&quot;) addresses copyright infringement notifications and how you (&quot;you&quot; or &quot;your&quot;) may submit a copyright infringement complaint.</p>
+    <p>Protection of intellectual property is of utmost importance to us and we ask our users and their authorized agents to do the same. It is our policy to expeditiously respond to clear notifications of alleged copyright infringement that comply with the United States Digital Millennium Copyright Act (&quot;DMCA&quot;) of 1998, the text of which can be found at the U.S. Copyright Office <a target="_blank" href="https://www.copyright.gov" rel="noopener">website</a>. This DMCA policy was created with the <a target="_blank" href="https://www.websitepolicies.com/dmca-policy-generator">DMCA policy generator</a>.</p>
+    <h2>What to consider before submitting a copyright complaint</h2>
+    <p>Before submitting a copyright complaint to us, consider whether the use could be considered fair use. Fair use states that brief excerpts of copyrighted material may, under certain circumstances, be quoted verbatim for purposes such as criticism, news reporting, teaching, and research, without the need for permission from or payment to the copyright holder. If you have considered fair use, and you still wish to continue with a copyright complaint, you may want to first reach out to the user in question to see if you can resolve the matter directly with the user.</p>
+    <p>Please note that if you are unsure whether the material you are reporting is in fact infringing, you may wish to contact an attorney before filing a notification with us.</p>
+    <p>The DMCA requires you to provide your personal information in the copyright infringement notification. If you are concerned about the privacy of your personal information, you may wish to <a target="_blank" href="https://www.copyrighted.com/professional-takedowns" rel="noopener">hire an agent</a> to report infringing material for you.</p>
+    <h2>Notifications of infringement</h2>
+    <p>Filing a DMCA complaint is the start of a pre-defined legal process. Your complaint will be reviewed for accuracy, validity, and completeness. Our response may include the removal or restriction of access to allegedly infringing material as well as a permanent termination of repeat infringers’ accounts.</p>
+    <p>If we remove or restrict access to materials or terminate an account in response to a Notification of alleged infringement, we will make a good faith effort to contact the affected user with information concerning the removal or restriction of access.</p>
+    <h2>Changes and amendments</h2>
+    <p>We reserve the right to modify this Policy or its terms relating to the Services at any time, effective upon posting of an updated version of this Policy on the Services. When we do, we will revise the updated date at the bottom of this page.</p>
+    <h2>Reporting copyright infringement</h2>
+    <p>If you would like to notify us of the infringing material or activity, you may send an email to su&#112;port&#64;ani&#46;&#114;&#105;p.</p>
+    <p>This document was last updated on May 23, 2021</p>
+	`;
+    $('#content').html(content);
+}
+
+// 渲染 Contact Us
+function contactus() {
+    nav("/ContactUs");
+    var content = `
+    <h1>聯絡我們</h1>
+    <p>Email: support@ani.rip</p>
+    <p>Discord: https://ani.rip/discord</p>
+	`;
+    $('#content').html(content);
 }
 
 // 渲染导航栏
@@ -93,8 +141,13 @@ function nav(path) {
     if (arr.length > 0) {
         for (i in arr) {
             var n = arr[i];
-            n = decodeURI(n);
-            p += n + '/';
+            if (n == "DMCA" || n == "ContactUs") {
+                p += "";
+            }
+            else {
+                n = decodeURI(n);
+                p += n + '/';
+            }
             if (n == '') {
                 break;
             }
@@ -253,7 +306,7 @@ function list_files(path, files) {
                 </li>`;
                 }
                 else if ("|nfo|".indexOf(`|${ext}|`) >= 0) {
-                    
+
                 }
                 else {
                     html += `<li class="mdui-list-item file mdui-ripple" target="_blank"><a gd-type="${item.mimeType}" href="${p}" class="${c}">
