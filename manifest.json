@@ -2,7 +2,7 @@
   "name": "ANi Open",
   "short_name": "ANi Open",
   "scope": "https://aniopen.a-ni.workers.dev/",
-  "display": "standalone",
+  "display": "fullscreen",
   "start_url": "https://aniopen.a-ni.workers.dev/",
   "background_color": "#000000",
   "theme_color": "#000000",
