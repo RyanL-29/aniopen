@@ -22,12 +22,12 @@ var html = `
   <link rel="apple-touch-icon" href="//cdn.jsdelivr.net/gh/RyanL-29/aniopen/pwa_icon/192x192nt.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="ANi Open Test">
+  <meta name="apple-mobile-web-app-title" content="ANi Open">
   <meta name="msapplication-TileColor" content="#000000">
   <meta name="theme-color" content ="#000000">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://open.ani.rip/">
-  <meta property="og:site_name" content="Open ANi Test">
+  <meta property="og:site_name" content="Open ANi">
   <meta property="og:title" content="ANi Open | 新番下載 & 線上看 ">
   <meta property="og:description" content="ANi Open 全自動新番更新系統">
   <meta property="og:image" content="https://raw.githubusercontent.com/RyanL-29/aniopen/master/aniiconw.png">
