@@ -1,13 +1,13 @@
 var authConfig = {
     "siteName": "", // 网站名称
     "root_pass": "",  // 根目录密码，优先于.password
-    "version": "1.4.7", // 程序版本
+    "version": "1.6.8", // 程序版本
     "theme": "material", // material  classic 
     "client_id": "",
     "client_secret": "",
     "refresh_token": "", // 授权 token
     "root": "", // 根目录ID
-    "searchShareEmail": "" // 檔案分享者 email -- 用於搜尋功能
+    "searchShareEmail": "" // 檔案分享者 Gmail -- 用於搜尋功能 !! 不能是檔案擁有者帳戶 !!
 };
 
 var gd;
@@ -22,12 +22,12 @@ var html = `
   <link rel="apple-touch-icon" href="//cdn.jsdelivr.net/gh/RyanL-29/aniopen/pwa_icon/192x192nt.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="ANi Open Test">
+  <meta name="apple-mobile-web-app-title" content="ANi Open">
   <meta name="msapplication-TileColor" content="#000000">
   <meta name="theme-color" content ="#000000">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://open.ani.rip/">
-  <meta property="og:site_name" content="Open ANi Test">
+  <meta property="og:site_name" content="Open ANi">
   <meta property="og:title" content="ANi Open | 新番下載 & 線上看 ">
   <meta property="og:description" content="ANi Open 全自動新番更新系統">
   <meta property="og:image" content="https://raw.githubusercontent.com/RyanL-29/aniopen/master/aniiconw.png">
@@ -154,12 +154,14 @@ var html = `
     margin-top: 56px;
 }
 
-body {overflow: overlay;}
+body {
+  overflow: overlay;   
+  display:flex; 
+  flex-direction:column; 
+}
 
 footer {
-  position: relative;
-  bottom: 0;
-  left: 0;
+  margin-top:auto;
   width: 100%;
   background-color: transparent;
   color: #ABABAB;
@@ -185,6 +187,9 @@ html, body{
   height:100%;
 }
 
+html {
+scroll-behavior: smooth;
+}
 ins{
   border-radius: 50%;
   background: #ABABAB;
@@ -192,6 +197,10 @@ ins{
   height: 3px;
   margin: .2rem .4rem;
   width: 3px;
+}
+
+#content{
+    padding-bottom:2em;
 }
   </style>
 </head>
