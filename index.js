@@ -4,9 +4,9 @@ if ("serviceWorker" in navigator)
 		//Notification
 		if ('Notification' in window) {
 			//console.log('Notification permission default status:', Notification.permission);
-			Notification.requestPermission(function (status) {
-				console.log('Notification permission status:', status);
-			});
+			//Notification.requestPermission(function (status) {
+				//console.log('Notification permission status:', status);
+			//});
 		}
 		//subscribeUser(reg);
 	}).catch(error => {
@@ -35,7 +35,7 @@ function subscribeUser(swRegistration) {
 		applicationServerKey: applicationServerKey
 	})
 		.then(subscription => {
-			console.log('User is subscribed');
+			//console.log('User is subscribed');
 			console.log(JSON.stringify(subscription));
 		})
 		.catch(err => {
