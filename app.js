@@ -397,26 +397,28 @@ function get_file(path, file, callback) {
 
 // 文件展示 ?a=view
 function file(path) {
+    var dir = path.split('/').slice(0, -1).join('/');;
     var name = path.split('/').pop();
+    var encodedPath = dir + '/' + encodeURIComponent(name)
     var ext = name.split('.').pop().toLowerCase().replace(`?a=view`, "");
     if ("|html|php|css|go|java|js|json|txt|sh|md|".indexOf(`|${ext}|`) >= 0) {
-        return file_code(path);
+        return file_code(encodedPath);
     }
 
     if ("|mp4|webm|avi|".indexOf(`|${ext}|`) >= 0) {
-        return file_video(path);
+        return file_video(encodedPath);
     }
 
     if ("|mpg|mpeg|mkv|rm|rmvb|mov|wmv|asf|ts|flv|".indexOf(`|${ext}|`) >= 0) {
-        return file_video(path);
+        return file_video(encodedPath);
     }
 
     if ("|mp3|wav|ogg|m4a|".indexOf(`|${ext}|`) >= 0) {
-        return file_audio(path);
+        return file_audio(encodedPath);
     }
 
     if ("|bmp|jpg|jpeg|png|gif|".indexOf(`|${ext}|`) >= 0) {
-        return file_image(path);
+        return file_image(encodedPath);
     }
 }
 
