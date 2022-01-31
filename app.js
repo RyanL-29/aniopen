@@ -49,7 +49,7 @@ function init() {
         overflow:visible;
     }
     /* Subtitle */
-    video::cue {
+    .dplayer-subtitle {
         color: #fff!important;
         font-weight: bold!important;
         text-shadow: -1px 1px 2px #000,1px 1px 2px #000,1px -1px 0 #000,-1px -1px 0 #000!important;
@@ -338,7 +338,7 @@ function list_files(path, files) {
                 p += "?a=view";
                 c += " view";
             }
-            if (item.name == "sw.js" || item.name.contains == ".vtt") {
+            if (item.name == "sw.js" || item.name.contains(".vtt")) {
 
             }
             else {
