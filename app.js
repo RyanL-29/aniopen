@@ -1,4 +1,4 @@
-const version = "1.7.85"
+const version = "1.7.86"
 
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
@@ -48,6 +48,13 @@ function init() {
     .mdui-list-item{
         overflow:visible;
     }
+    /* Subtitle */
+    video::cue {
+        color: #fff!important;
+        font-weight: bold!important;
+        text-shadow: -1px 1px 2px #000,1px 1px 2px #000,1px -1px 0 #000,-1px -1px 0 #000!important;
+    }
+
     </style>
 <header class="mdui-appbar mdui-color-grey-900 mdui-theme-layout-dark"> 
    <div id="nav" class="mdui-toolbar mdui-container">
@@ -331,7 +338,7 @@ function list_files(path, files) {
                 p += "?a=view";
                 c += " view";
             }
-            if (item.name == "sw.js") {
+            if (item.name == "sw.js" || item.name.contains == ".vtt") {
 
             }
             else {
@@ -537,8 +544,8 @@ function file_video(path) {
             url: subtitle,
             type: 'webvtt',
             fontSize: '25px',
-            bottom: '10%',
-            color: '#b7daff',
+            bottom: '10px',
+            color: '#fff',
         }
     });
 }
