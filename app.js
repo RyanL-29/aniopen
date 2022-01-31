@@ -1,4 +1,4 @@
-const version = "1.7.88"
+const version = "1.7.891"
 
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
@@ -50,6 +50,8 @@ function init() {
     }
     /* Subtitle */
     .dplayer-subtitle {
+        display: inline-block;
+        white-space: pre-wrap;
         color: #fff!important;
         font-weight: bold!important;
         text-shadow: -1px 1px 2px #000,1px 1px 2px #000,1px -1px 0 #000,-1px -1px 0 #000!important;
@@ -543,8 +545,8 @@ function file_video(path) {
         subtitle: {
             url: subtitle,
             type: 'webvtt',
-            fontSize: '25px',
-            bottom: '10px',
+            fontSize: '30px',
+            bottom: '13px',
             color: '#fff',
         }
     });
