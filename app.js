@@ -1,4 +1,4 @@
-const version = "1.7.891"
+const version = "1.7.892"
 
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
@@ -545,7 +545,7 @@ function file_video(path) {
         subtitle: {
             url: subtitle,
             type: 'webvtt',
-            fontSize: '30px',
+            fontSize: '2em',
             bottom: '13px',
             color: '#fff',
         }
