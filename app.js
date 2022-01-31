@@ -1,4 +1,4 @@
-const version = "1.7.894"
+const version = "1.7.9"
 
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
@@ -57,7 +57,7 @@ function init() {
         text-shadow: -1px 1px 2px #000,1px 1px 2px #000,1px -1px 0 #000,-1px -1px 0 #000!important;
     }
     .dplayer-video-wrap {
-        font-size: 20px;
+        font-size: 150%;
     }
 
     </style>
