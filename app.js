@@ -1,4 +1,4 @@
-const version = "1.7.87"
+const version = "1.7.88"
 
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
@@ -338,7 +338,7 @@ function list_files(path, files) {
                 p += "?a=view";
                 c += " view";
             }
-            if (item.name == "sw.js" || item.name.contains(".vtt")) {
+            if (item.name == "sw.js" || item.name.includes(".vtt")) {
 
             }
             else {
