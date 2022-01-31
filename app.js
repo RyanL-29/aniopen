@@ -496,7 +496,7 @@ function file_video(path) {
     }
     var share2 = share.replaceAll(/%25/g, "%");
     url = url.replaceAll(/%25/g, "%");
-    var subtitle = url.split(/(.mp4)|(.webm)|(.avi)/)[0] + '.srt'
+    var subtitle = url.split(/(.mp4)|(.webm)|(.avi)/)[0] + '.vtt'
     var vlc = 'vlc://https:' + share2;
     share2 = 'https:' + share2 + "?a=view";
     var playBtn = `<a href="${vlc}"><button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-deep-purple-900"><i class="mdui-icon material-icons">&#xe038;</i> 在 VLC media player 中播放</button></a>`;
