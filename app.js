@@ -56,6 +56,9 @@ function init() {
         font-weight: bold!important;
         text-shadow: -1px 1px 2px #000,1px 1px 2px #000,1px -1px 0 #000,-1px -1px 0 #000!important;
     }
+    .dplayer-video-wrap {
+        font-size: 20px;
+    }
 
     </style>
 <header class="mdui-appbar mdui-color-grey-900 mdui-theme-layout-dark"> 
@@ -545,7 +548,7 @@ function file_video(path) {
         subtitle: {
             url: subtitle,
             type: 'webvtt',
-            fontSize: '3.5rem',
+            fontSize: '2em',
             bottom: '13px',
             color: '#fff',
         }
