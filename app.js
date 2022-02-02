@@ -59,6 +59,17 @@ function init() {
     .dplayer-video-wrap {
         font-size: 150%;
     }
+    @media only screen and (max-device-width: 1020px) {
+        .dplayer-subtitle{
+            font-size: 4vw!important
+        }
+    }
+    
+    @media only screen and (max-device-width: 800px) {
+        .dplayer-subtitle{
+            font-size: 5vw!important
+        }
+    }
 
     </style>
 <header class="mdui-appbar mdui-color-grey-900 mdui-theme-layout-dark"> 
