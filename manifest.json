@@ -1,12 +1,12 @@
 {
   "name": "ANi Open",
   "short_name": "ANi Open",
-  "scope": "https://aniopen.a-ni.workers.dev/",
+  "scope": "https://aniopen.an-i.workers.dev/",
   "display": "fullscreen",
-  "start_url": "https://aniopen.a-ni.workers.dev/",
+  "start_url": "https://aniopen.an-i.workers.dev/",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "description": "ANi Open | ·sµf¤U¸ü & ½u¤W¬Ý",
+  "description": "ANi Open | æ–°ç•ªä¸‹è¼‰ & ç·šä¸Šçœ‹",
   "orientation": "any",
   "related_applications": [],
   "prefer_related_applications": false,
@@ -118,7 +118,7 @@
       "purpose": "any maskable"
     }
   ],
-  "url": "https://aniopen.a-ni.workers.dev/",
+  "url": "https://aniopen.an-i.workers.dev/",
   "screenshots": [
     {
       "src": "https://cdn.jsdelivr.net/gh/RyanL-29/aniopen/pwa_screenshot/1280x800.png",
