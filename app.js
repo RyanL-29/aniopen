@@ -94,7 +94,6 @@ function render(path) {
     if (path.indexOf("?") > 0) {
         path = path.substr(0, path.indexOf("?"));
     }
-    title(path);
     nav(path);
     if (path.substr(-1) == '/') {
         list(path);
@@ -140,13 +139,6 @@ function globalsearch() {
             list_files(obj.foldername, obj.files);
         }
     })
-}
-
-
-// 渲染 title
-function title(path) {
-    path = decodeURI(path);
-    //$('title').html(document.siteName+' - '+path);
 }
 
 // 渲染 DMCA
@@ -203,7 +195,7 @@ function nav(path) {
                 p += "";
             }
             else {
-                n = decodeURI(n);
+                n = decodeURIComponent(n);
                 p += n + '/';
             }
             if (n == '') {
@@ -464,7 +456,8 @@ function file_code(path) {
     var rawshare = url.split('/');
     var share = "";
     for (i = 1; i < rawshare.length; i++) {
-        var pathcomp = encodeURIComponent(rawshare[i]);
+        var pathcomp = decodeURIComponent(rawshare[i])
+        pathcomp = encodeURIComponent(pathcomp);
         share = share + '/' + pathcomp;
     }
     var share2 = share.replaceAll(/%25/g, "%");
@@ -511,7 +504,8 @@ function file_video(path) {
     var rawshare = url.split('/');
     var share = "";
     for (i = 1; i < rawshare.length; i++) {
-        var pathcomp = encodeURIComponent(rawshare[i]);
+        var pathcomp = decodeURIComponent(rawshare[i])
+        pathcomp = encodeURIComponent(pathcomp);
         share = share + '/' + pathcomp;
     }
     var share2 = share.replaceAll(/%25/g, "%");
@@ -569,7 +563,8 @@ function file_audio(path) {
     var rawshare = url.split('/');
     var share = "";
     for (i = 1; i < rawshare.length; i++) {
-        var pathcomp = encodeURIComponent(rawshare[i]);
+        var pathcomp = decodeURIComponent(rawshare[i])
+        pathcomp = encodeURIComponent(pathcomp);
         share = share + '/' + pathcomp;
     }
     var share2 = share.replaceAll(/%25/g, "%");
@@ -601,7 +596,8 @@ function file_image(path) {
     var rawshare = url.split('/');
     var share = "";
     for (i = 1; i < rawshare.length; i++) {
-        var pathcomp = encodeURIComponent(rawshare[i]);
+        var pathcomp = decodeURIComponent(rawshare[i])
+        pathcomp = encodeURIComponent(pathcomp);
         share = share + '/' + pathcomp;
     }
     var share2 = share.replaceAll(/%25/g, "%");
