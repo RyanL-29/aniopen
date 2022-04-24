@@ -219,9 +219,6 @@ function nav(path) {
                 html += `<div class="mdui-toolbar-spacer"></div>`
         }
         else {
-            if (screen.width >= 570)
-                html += `<div class="mdui-toolbar-spacer"></div><div class="mdui-textfield"><i style="bottom: 0px;" class="mdui-icon material-icons">search</i><input style="color:white; cursor:text;" id="searchinput" class="mdui-textfield-input" onkeyup="timeout()" type="search" placeholder="搜尋" disabled/></div>`
-            else
                 html += `<div class="mdui-toolbar-spacer"></div>`
         }
         html += `<a href="https://t.me/channel_ani" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: 'Telegram'}">
@@ -317,6 +314,7 @@ function list_files(path, files) {
         }
         pProg = p.split('/')
         pProg.forEach((ps, index) => {
+            ps = decodeURIComponent(ps)
             pProg[index] = encodeURIComponent(ps)
         })
         if (item['size'] == undefined) {
