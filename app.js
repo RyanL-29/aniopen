@@ -3,7 +3,6 @@ const version = "1.9.2"
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@2.0.1/css/ionicons.min.css">');
-document.write(`<link rel="application/javascript" href="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen@${version}/srt2vtt.min.js">`);
 document.write(`<link rel="manifest" href="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen@${version}/manifest.json">`);
 document.write('<link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen/pwa_icon/192x192nt.png">');
 // markdown支持
@@ -352,7 +351,7 @@ function list_files(path, files) {
                 p += "?a=view";
                 c += " view";
             }
-            if (item.name == "sw.js" || item.name.includes(".vtt")) {
+            if (item.name == "sw.js" || item.name.includes(".vtt") || item.name.includes(".srt")) {
 
             }
             else {
