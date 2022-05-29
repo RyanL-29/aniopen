@@ -1,4 +1,4 @@
-const version = "1.9.6"
+const version = "1.9.7"
 
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
@@ -217,7 +217,7 @@ function nav(path) {
                     </svg>
                 </a>
                 <a href="https://ko-fi.com/anidonate" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: 'Donate'}">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="90%" preserveAspectRatio="xMidYMid meet"
                 viewBox="0 0 503.467 503.467" style="enable-background:new 0 0 503.467 503.467;" xml:space="preserve">
                     <g transform="translate(1 1)">
                         <path style="fill:#AAB1BA;" d="M3.33,498.2V276.333h51.2c9.387,0,17.067,7.68,17.067,17.067v17.067v119.467v51.2
