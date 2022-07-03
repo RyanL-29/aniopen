@@ -1,4 +1,4 @@
-const version = "1.9.8"
+const version = "1.9.9"
 
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
@@ -12,8 +12,11 @@ document.write(`<script src="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen@${vers
 document.write('<style>.mdui-appbar .mdui-toolbar{height:56px;font-size:1pc}.mdui-toolbar>*{padding:0 6px;margin:0 2px}.mdui-toolbar>i{opacity:.5}.mdui-toolbar>.mdui-typo-headline{padding:0 1pc 0 0}.mdui-toolbar>i{padding:0}.mdui-toolbar>a:hover,a.active,a.mdui-typo-headline{opacity:1}.mdui-container{max-width:980px}.mdui-list-item{transition:none}.mdui-list>.th{background-color:initial}.mdui-list-item>a{width:100%;line-height:3pc}.mdui-list-item{margin:2px 0;padding:0}.mdui-toolbar>a:last-child{opacity:1}@media screen and (max-width:980px){.mdui-list-item .mdui-text-right{display:none}.mdui-container{width:100%!important;margin:0}.mdui-toolbar>.mdui-typo-headline,.mdui-toolbar>a:last-child,.mdui-toolbar>i:first-child{display:block}}</style>');
 
 // Cloudflare underscore function
-document.write(`<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js">></script>`);
+document.write(`<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>`);
 
+//Smooth scroll
+document.write(`<script src="https://cdn.jsdelivr.net/gh/idiotWu/smooth-scrollbar@develop/dist/smooth-scrollbar.js"></script>`);
+document.write(`<script src="https://cdn.jsdelivr.net/gh/idiotWu/smooth-scrollbar@develop/dist/plugins/overscroll.js"></script>`);
 // 初始化页面，并载入必要资源
 function init() {
     document.siteName = $('title').html();
@@ -72,6 +75,19 @@ function init() {
             font-size: 5vw!important
         }
     }
+
+    html {
+        background-color: #424242!important;
+    }
+
+    .scrollbar-track {
+        background: transparent;
+    }
+
+    .scrollbar-thumb {
+        background: grey;
+    }
+
 
     </style>
 <header class="mdui-appbar mdui-color-grey-900 mdui-theme-layout-dark"> 
@@ -774,11 +790,11 @@ function sortFileList(sortTarget) {
         tempListELe = [...listEle]
         listArr = document.getElementsByClassName(sortTarget);
         let tempEle = [...listArr]
-        let mapped = tempEle.map((el, i)=> { return {index: i, value: el}})
+        let mapped = tempEle.map((el, i) => { return { index: i, value: el } })
         let orgArr = [...mapped]
-        
+
         if (dir == "asc") {
-            mapped.sort((x, y)=> {
+            mapped.sort((x, y) => {
                 if (sortTarget === "sortsize") {
                     if (covertSizeStringToBytes(x.value.innerHTML) > covertSizeStringToBytes(y.value.innerHTML)) { return 1; }
                     if (covertSizeStringToBytes(x.value.innerHTML) < covertSizeStringToBytes(y.value.innerHTML)) { return -1; }
@@ -789,7 +805,7 @@ function sortFileList(sortTarget) {
                 return 0;
             })
         } else if (dir == "desc") {
-            mapped.sort((x, y)=> {
+            mapped.sort((x, y) => {
                 if (sortTarget === "sortsize") {
                     if (covertSizeStringToBytes(x.value.innerHTML) > covertSizeStringToBytes(y.value.innerHTML)) { return -1; }
                     if (covertSizeStringToBytes(x.value.innerHTML) < covertSizeStringToBytes(y.value.innerHTML)) { return 1; }
@@ -826,6 +842,25 @@ function printlogo() {
 $(function () {
     init();
     printlogo();
+    const Scrollbar = window.Scrollbar;
+    const overscroll = window.OverscrollPlugin;
+    Scrollbar.use(overscroll)
+    Scrollbar.init(document.querySelector('html'), 
+        {   damping: 0.06, 
+            renderByPixels: true, 
+            plugins: { 
+                overscroll: 
+                {
+                    effect: 'glow',
+                    damping: 0.09,
+                    glowColor: "rgba(0, 0, 0, 0.29)",
+                    maxOverscroll: 1000
+                }
+            }
+        }
+    );
+
+
     var path = window.location.pathname;
     $("body").on("click", '.folder', function () {
         var url = $(this).attr('href');
