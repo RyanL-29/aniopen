@@ -743,11 +743,5 @@ $(function () {
         return false;
     });
 
-    var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://cdn.jsdelivr.net/gh/RyanL-29/aniopen/favicon.ico';
-    document.getElementsByTagName('head')[0].appendChild(link);
-
     render(path);
 });

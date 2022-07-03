@@ -1,7 +1,8 @@
-const version = "1.9.9"
+const version = "2.0.0"
 
-document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
-document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
+document.write(`<link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen/favicon.ico">`)
+document.write('<link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css" />');
+document.write('<script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>');
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@2.0.1/css/ionicons.min.css">');
 document.write(`<link rel="manifest" href="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen@${version}/manifest.json">`);
 document.write('<link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen/pwa_icon/192x192nt.png">');
@@ -206,7 +207,7 @@ function nav(path) {
     var html = "";
     html += `<div style="max-width:150px;"><img class="mdui-typo-headline mdui-img-fluid folder" href="/"  style = "max-width: 100%;height: auto;width: auto;"src="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen/aniopen.png"></div>`;
     var arr = path.trim('/').split('/');
-    var p = '/';
+    let p = "/"
     if (arr.length > 0) {
         for (i in arr) {
             var n = arr[i];
@@ -489,7 +490,7 @@ function get_file(path, file, callback) {
 function file(path) {
     var dir = path.split('/').slice(0, -1).join('/');;
     var name = path.split('/').pop();
-    var encodedPath = dir + '/' + encodeURIComponent(name)
+    var encodedPath = dir + '/' + name
     var ext = name.split('.').pop().toLowerCase().replace(`?a=view`, "");
     if ("|html|php|css|go|java|js|json|txt|sh|md|".indexOf(`|${ext}|`) >= 0) {
         return file_code(encodedPath);
@@ -530,6 +531,10 @@ function file_code(path) {
     var ext = name.split('.').pop();
     var href = window.location.origin + path;
     var rawshare = url.split('/');
+    let fileName_mobile = ``
+    if (screen.width < 570) {
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.html|.php|.css|.go|.java|.js|.json|.txt|.sh|.md/g,  ""))}</p>`
+    }
     var share = "";
     for (i = 1; i < rawshare.length; i++) {
         var pathcomp = decodeURIComponent(rawshare[i])
@@ -540,14 +545,16 @@ function file_code(path) {
     share2 = 'https:' + share2 + "?a=view";
     var content = `
 <div class="mdui-container">
-<pre id="editor" ></pre>
+<pre id="editor"></pre>
 </div>
+<br>
+${fileName_mobile}
 <div class="mdui-textfield">
 	<label class="mdui-textfield-label">下載地址</label>
 	<input class="mdui-textfield-input" type="text" value="${href}"/>
 </div>
-    <button href="${share2}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
-    <button onclick="javascript:location.href='${href}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
+<button href="${share2}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
+<button onclick="javascript:location.href='${href}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
 <script src="https://cdn.staticfile.org/ace/1.4.7/ace.js"></script>
 <script src="https://cdn.staticfile.org/ace/1.4.7/ext-language_tools.js"></script>
 	`;
@@ -579,6 +586,10 @@ function file_video(path) {
     var url = window.location.origin + path;
     var rawshare = url.split('/');
     var share = "";
+    let fileName_mobile = ``
+    if (screen.width < 570) {
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.mp4|.webm|.avi/g,  ""))}</p>`
+    }
     for (i = 1; i < rawshare.length; i++) {
         var pathcomp = decodeURIComponent(rawshare[i])
         pathcomp = encodeURIComponent(pathcomp);
@@ -594,6 +605,8 @@ function file_video(path) {
 <div class="mdui-container-fluid">
 	<br>
     <div class="mdui-video-fluid mdui-center" id="dplayer"></div>
+    <br>
+    ${fileName_mobile}
     <br> 如果以上片段無法播放，可使用以下 VLC 播放連結 (請使用 Google Chrome)
 	<br>
 	<br>${playBtn}
@@ -638,6 +651,10 @@ function file_audio(path) {
     var url = window.location.origin + path;
     var rawshare = url.split('/');
     var share = "";
+    let fileName_mobile = ``
+    if (screen.width < 570) {
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.mp3|.m4a|.wav|.ogg/g,  ""))}</p>`
+    }
     for (i = 1; i < rawshare.length; i++) {
         var pathcomp = decodeURIComponent(rawshare[i])
         pathcomp = encodeURIComponent(pathcomp);
@@ -652,6 +669,7 @@ function file_audio(path) {
 	  <source src="${url}"">
 	</audio>
 	<br>
+    ${fileName_mobile}
 	<!-- 固定标签 -->
 	<div class="mdui-textfield">
 	  <label style="color:white;" class="mdui-textfield-label">下載地址</label>
@@ -666,11 +684,15 @@ function file_audio(path) {
 }
 
 
-// 图片展示
+// 图片展示 bmp|jpg|jpeg|png|gif
 function file_image(path) {
     var url = window.location.origin + path;
     var rawshare = url.split('/');
     var share = "";
+    let fileName_mobile = ``
+    if (screen.width < 570) {
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.bmp|.jpg|.jpeg|.png|.gif/g,  ""))}</p>`
+    }
     for (i = 1; i < rawshare.length; i++) {
         var pathcomp = decodeURIComponent(rawshare[i])
         pathcomp = encodeURIComponent(pathcomp);
@@ -683,6 +705,7 @@ function file_image(path) {
 	<br>
 	<img class="mdui-img-fluid" src="${url}"/>
 	<br>
+    ${fileName_mobile}
 	<div class="mdui-textfield">
 	  <label class="mdui-textfield-label">下載地址</label>
 	  <input class="mdui-textfield-input" type="text" value="${url}"/>
@@ -875,12 +898,6 @@ $(function () {
         render(url);
         return false;
     });
-
-    var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://cdn.jsdelivr.net/gh/RyanL-29/aniopen/favicon.ico';
-    document.getElementsByTagName('head')[0].appendChild(link);
 
     render(path);
 });
