@@ -1,4 +1,4 @@
-const version = "2.0.0"
+const version = "2.0.1"
 
 document.write(`<link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen/favicon.ico">`)
 document.write('<link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css" />');
@@ -83,10 +83,14 @@ function init() {
 
     .scrollbar-track {
         background: transparent;
+        width: 5px;
+        border-radius: 10px;
+        margin-top: 56px;
     }
 
     .scrollbar-thumb {
         background: grey;
+        border-radius: 10px;
     }
 
 
@@ -533,7 +537,7 @@ function file_code(path) {
     var rawshare = url.split('/');
     let fileName_mobile = ``
     if (screen.width < 570) {
-        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.html|.php|.css|.go|.java|.js|.json|.txt|.sh|.md/g,  ""))}</p>`
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.html|.php|.css|.go|.java|.js|.json|.txt|.sh|.md/g, ""))}</p>`
     }
     var share = "";
     for (i = 1; i < rawshare.length; i++) {
@@ -588,7 +592,7 @@ function file_video(path) {
     var share = "";
     let fileName_mobile = ``
     if (screen.width < 570) {
-        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.mp4|.webm|.avi/g,  ""))}</p>`
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.mp4|.webm|.avi/g, ""))}</p>`
     }
     for (i = 1; i < rawshare.length; i++) {
         var pathcomp = decodeURIComponent(rawshare[i])
@@ -653,7 +657,7 @@ function file_audio(path) {
     var share = "";
     let fileName_mobile = ``
     if (screen.width < 570) {
-        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.mp3|.m4a|.wav|.ogg/g,  ""))}</p>`
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.mp3|.m4a|.wav|.ogg/g, ""))}</p>`
     }
     for (i = 1; i < rawshare.length; i++) {
         var pathcomp = decodeURIComponent(rawshare[i])
@@ -691,7 +695,7 @@ function file_image(path) {
     var share = "";
     let fileName_mobile = ``
     if (screen.width < 570) {
-        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.bmp|.jpg|.jpeg|.png|.gif/g,  ""))}</p>`
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.bmp|.jpg|.jpeg|.png|.gif/g, ""))}</p>`
     }
     for (i = 1; i < rawshare.length; i++) {
         var pathcomp = decodeURIComponent(rawshare[i])
@@ -860,6 +864,25 @@ function printlogo() {
     console.log(k);
 }
 
+/*Share Copy */
+function copyURI(evt) {
+    evt.preventDefault();
+    /* clipboard successfully set */
+    navigator.clipboard.writeText(evt.target.getAttribute('href')).then(() => {
+        /* clipboard successfully set */
+        evt.target.innerHTML = `<i class="mdui-icon material-icons">done</i> Copied`
+        setTimeout(()=> {
+            evt.target.innerHTML = `<i class="mdui-icon material-icons">share</i> Share`
+        }, 1500)
+    }, () => {
+        /* clipboard write failed */
+        evt.target.innerHTML = `<i class="mdui-icon material-icons">clear</i> Error`
+        setTimeout(()=> {
+            evt.target.innerHTML = `<i class="mdui-icon material-icons">share</i> Share`
+        }, 1500)
+    });
+}
+
 
 
 $(function () {
@@ -868,11 +891,12 @@ $(function () {
     const Scrollbar = window.Scrollbar;
     const overscroll = window.OverscrollPlugin;
     Scrollbar.use(overscroll)
-    Scrollbar.init(document.querySelector('html'), 
-        {   damping: 0.06, 
-            renderByPixels: true, 
-            plugins: { 
-                overscroll: 
+    Scrollbar.init(document.querySelector('html'),
+        {
+            damping: 0.06,
+            renderByPixels: true,
+            plugins: {
+                overscroll:
                 {
                     effect: 'glow',
                     damping: 0.09,
