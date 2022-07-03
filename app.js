@@ -1,4 +1,8 @@
-const version = "2.0.1"
+const version = "2.0.2"
+
+//Smooth scroll
+// document.write(`<script src="https://cdn.jsdelivr.net/gh/idiotWu/smooth-scrollbar@develop/dist/smooth-scrollbar.js"></script>`);
+// document.write(`<script src="https://cdn.jsdelivr.net/gh/idiotWu/smooth-scrollbar@develop/dist/plugins/overscroll.js"></script>`);
 
 document.write(`<link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen/favicon.ico">`)
 document.write('<link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css" />');
@@ -15,9 +19,7 @@ document.write('<style>.mdui-appbar .mdui-toolbar{height:56px;font-size:1pc}.mdu
 // Cloudflare underscore function
 document.write(`<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>`);
 
-//Smooth scroll
-document.write(`<script src="https://cdn.jsdelivr.net/gh/idiotWu/smooth-scrollbar@develop/dist/smooth-scrollbar.js"></script>`);
-document.write(`<script src="https://cdn.jsdelivr.net/gh/idiotWu/smooth-scrollbar@develop/dist/plugins/overscroll.js"></script>`);
+
 // 初始化页面，并载入必要资源
 function init() {
     document.siteName = $('title').html();
@@ -81,17 +83,45 @@ function init() {
         background-color: #424242!important;
     }
 
-    .scrollbar-track {
+    /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background: grey; 
+    border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: #FBFBFB; 
+    }
+
+    ::-webkit-scrollbar-track-piece:start {
         background: transparent;
-        width: 5px;
-        border-radius: 10px;
         margin-top: 56px;
     }
 
-    .scrollbar-thumb {
-        background: grey;
-        border-radius: 10px;
-    }
+    // .scrollbar-track {
+    //     background: transparent;
+    //     width: 5px;
+    //     border-radius: 10px;
+    //     margin-top: 56px;
+    // }
+
+    // .scrollbar-thumb {
+    //     background: grey;
+    //     border-radius: 10px;
+    // }
 
 
     </style>
@@ -868,18 +898,31 @@ function printlogo() {
 function copyURI(evt) {
     evt.preventDefault();
     /* clipboard successfully set */
+    // navigator.clipboard.writeText(evt.target.getAttribute('href')).then(() => {
+    //     /* clipboard successfully set */
+    //     evt.target.innerHTML = `<i class="mdui-icon material-icons">done</i> Copied`
+    //     setTimeout(()=> {
+    //         evt.target.innerHTML = `<i class="mdui-icon material-icons">share</i> Share`
+    //     }, 1500)
+    // }, () => {
+    //     /* clipboard write failed */
+    //     evt.target.innerHTML = `<i class="mdui-icon material-icons">clear</i> Error`
+    //     setTimeout(()=> {
+    //         evt.target.innerHTML = `<i class="mdui-icon material-icons">share</i> Share`
+    //     }, 1500)
+    // });
     navigator.clipboard.writeText(evt.target.getAttribute('href')).then(() => {
         /* clipboard successfully set */
-        evt.target.innerHTML = `<i class="mdui-icon material-icons">done</i> Copied`
-        setTimeout(()=> {
-            evt.target.innerHTML = `<i class="mdui-icon material-icons">share</i> Share`
-        }, 1500)
+        mdui.snackbar({
+            message: '已複製連結 - Link Copied',
+            position: 'right-top'
+        });
     }, () => {
         /* clipboard write failed */
-        evt.target.innerHTML = `<i class="mdui-icon material-icons">clear</i> Error`
-        setTimeout(()=> {
-            evt.target.innerHTML = `<i class="mdui-icon material-icons">share</i> Share`
-        }, 1500)
+            mdui.snackbar({
+            message: '複製連結失敗 - Link Copy failed',
+            position: 'right-top'
+        });
     });
 }
 
@@ -888,24 +931,24 @@ function copyURI(evt) {
 $(function () {
     init();
     printlogo();
-    const Scrollbar = window.Scrollbar;
-    const overscroll = window.OverscrollPlugin;
-    Scrollbar.use(overscroll)
-    Scrollbar.init(document.querySelector('html'),
-        {
-            damping: 0.06,
-            renderByPixels: true,
-            plugins: {
-                overscroll:
-                {
-                    effect: 'glow',
-                    damping: 0.09,
-                    glowColor: "rgba(0, 0, 0, 0.29)",
-                    maxOverscroll: 1000
-                }
-            }
-        }
-    );
+    // const Scrollbar = window.Scrollbar;
+    // const overscroll = window.OverscrollPlugin;
+    // Scrollbar.use(overscroll)
+    // Scrollbar.init(document.querySelector('html'),
+    //     {
+    //         damping: 0.06,
+    //         renderByPixels: true,
+    //         plugins: {
+    //             overscroll:
+    //             {
+    //                 effect: 'glow',
+    //                 damping: 0.09,
+    //                 glowColor: "rgba(0, 0, 0, 0.29)",
+    //                 maxOverscroll: 1000
+    //             }
+    //         }
+    //     }
+    // );
 
 
     var path = window.location.pathname;
