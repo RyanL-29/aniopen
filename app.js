@@ -1,4 +1,4 @@
-const version = "1.9.7"
+const version = "1.9.8"
 
 document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">');
 document.write('<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>');
@@ -10,6 +10,9 @@ document.write('<script src="https://cdn.jsdelivr.net/npm/markdown-it@10.0.0/dis
 // DPlayer API
 document.write(`<script src="https://cdn.jsdelivr.net/gh/RyanL-29/aniopen@${version}/DPlayer.min.js"></script>`);
 document.write('<style>.mdui-appbar .mdui-toolbar{height:56px;font-size:1pc}.mdui-toolbar>*{padding:0 6px;margin:0 2px}.mdui-toolbar>i{opacity:.5}.mdui-toolbar>.mdui-typo-headline{padding:0 1pc 0 0}.mdui-toolbar>i{padding:0}.mdui-toolbar>a:hover,a.active,a.mdui-typo-headline{opacity:1}.mdui-container{max-width:980px}.mdui-list-item{transition:none}.mdui-list>.th{background-color:initial}.mdui-list-item>a{width:100%;line-height:3pc}.mdui-list-item{margin:2px 0;padding:0}.mdui-toolbar>a:last-child{opacity:1}@media screen and (max-width:980px){.mdui-list-item .mdui-text-right{display:none}.mdui-container{width:100%!important;margin:0}.mdui-toolbar>.mdui-typo-headline,.mdui-toolbar>a:last-child,.mdui-toolbar>i:first-child{display:block}}</style>');
+
+// Cloudflare underscore function
+document.write(`<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js">></script>`);
 
 // 初始化页面，并载入必要资源
 function init() {
@@ -210,7 +213,7 @@ function nav(path) {
                 html += `<div class="mdui-toolbar-spacer"></div>`
         }
         else {
-                html += `<div class="mdui-toolbar-spacer"></div>`
+            html += `<div class="mdui-toolbar-spacer"></div>`
         }
         html += `<a href="https://t.me/channel_ani" target="_blank" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-tooltip="{content: 'Telegram'}">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="100%" height="100%" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23l7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3L3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z" fill="white"/></svg>
@@ -305,15 +308,15 @@ function list(path) {
 	 <div class="mdui-row"> 
 	  <ul class="mdui-list"> 
 	   <li class="mdui-list-item th"> 
-	    <div class="mdui-col-xs-12 mdui-col-sm-7" onclick="sortListDirName()">
+	    <div class="mdui-col-xs-12 mdui-col-sm-7" onclick="sortFileList('sortname')">
 	     文件
 	<i class="mdui-icon material-icons icon-sort" data-sort="name" data-order="more">expand_more</i>
 	    </div> 
-	    <div class="mdui-col-sm-3 mdui-text-right" onclick="sortListDirDate()">
+	    <div class="mdui-col-sm-3 mdui-text-right" onclick="sortFileList('sortdate')">
 	     修改時間
 	<i class="mdui-icon material-icons icon-sort" data-sort="date" data-order="downward">expand_more</i>
 	    </div> 
-	    <div class="mdui-col-sm-2 mdui-text-right" onclick="sortListDirSize()">
+	    <div class="mdui-col-sm-2 mdui-text-right" onclick="sortFileList('sortsize')">
 	     檔案大小
 	<i class="mdui-icon material-icons icon-sort" data-sort="size" data-order="downward">expand_more</i>
 	    </div>
@@ -719,6 +722,16 @@ function formatFileSize(bytes) {
     return bytes;
 }
 
+function covertSizeStringToBytes(fileSize) {
+    if (fileSize.includes('GB')) {
+        return parseInt(fileSize.split("GB")[0]) * 1073741824
+    } else if (fileSize.includes('MB')) {
+        return parseInt(fileSize.split("MB")[0]) * 1048576
+    } else if (fileSize.includes('KB')) {
+        return parseInt(fileSize.split("KB")[0]) * 1024
+    }
+}
+
 String.prototype.trim = function (char) {
     if (char) {
         return this.replace(new RegExp('^\\' + char + '+|\\' + char + '+$', 'g'), '');
@@ -746,10 +759,9 @@ window.onpopstate = function () {
     render(path);
 }
 
-
-//Sorting for list date
-function sortListDirDate() {
-    var list, i, switching, b, shouldSwitch, dir, switchcount = 0, c, d;
+//Sorting List
+function sortFileList(sortTarget) {
+    var list, switching, listEle, dir, listArr, tempListELe;
     list = document.getElementById("list");
     switching = true;
     // Set the sorting direction to ascending:
@@ -758,152 +770,46 @@ function sortListDirDate() {
     while (switching) {
         // Start by saying: no switching is done:
         switching = false;
-        b = list.getElementsByTagName("LI");
-        c = document.getElementsByClassName("sortdate");
-        //console.log(c[0].innerHTML);
-        //console.log(c[1].innerHTML);
-        // Loop through all list-items:
-        for (i = 0; i < (c.length - 1); i++) {
-            d = 0;
-            // Start by saying there should be no switching:
-            shouldSwitch = false;
-            /* Check if the next item should switch place with the current item,
-            based on the sorting direction (asc or desc): */
-            if (dir == "asc") {
-                d = i + 1;
-                if (c[i].innerHTML > c[d].innerHTML) {
-                    shouldSwitch = true;
-                    break;
+        listEle = list.getElementsByTagName("LI");
+        tempListELe = [...listEle]
+        listArr = document.getElementsByClassName(sortTarget);
+        let tempEle = [...listArr]
+        let mapped = tempEle.map((el, i)=> { return {index: i, value: el}})
+        let orgArr = [...mapped]
+        
+        if (dir == "asc") {
+            mapped.sort((x, y)=> {
+                if (sortTarget === "sortsize") {
+                    if (covertSizeStringToBytes(x.value.innerHTML) > covertSizeStringToBytes(y.value.innerHTML)) { return 1; }
+                    if (covertSizeStringToBytes(x.value.innerHTML) < covertSizeStringToBytes(y.value.innerHTML)) { return -1; }
+                } else {
+                    if (x.value.innerHTML > y.value.innerHTML) { return 1; }
+                    if (x.value.innerHTML < y.value.innerHTML) { return -1; }
                 }
-            } else if (dir == "desc") {
-                d = i + 1;
-                if (c[i].innerHTML < c[d].innerHTML) {
-                    shouldSwitch = true;
-                    break;
+                return 0;
+            })
+        } else if (dir == "desc") {
+            mapped.sort((x, y)=> {
+                if (sortTarget === "sortsize") {
+                    if (covertSizeStringToBytes(x.value.innerHTML) > covertSizeStringToBytes(y.value.innerHTML)) { return -1; }
+                    if (covertSizeStringToBytes(x.value.innerHTML) < covertSizeStringToBytes(y.value.innerHTML)) { return 1; }
+                } else {
+                    if (x.value.innerHTML > y.value.innerHTML) { return -1; }
+                    if (x.value.innerHTML < y.value.innerHTML) { return 1; }
                 }
-            }
-        }
-        if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
-            b[i].parentNode.insertBefore(b[i + 1], b[i]);
-            switching = true;
-            // Each time a switch is done, increase switchcount by 1:
-            switchcount++;
-        } else {
-            /* If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && dir == "asc") {
-                dir = "desc";
-                switching = true;
-            }
-        }
-    }
-}
 
-//Sorting for list size
-function sortListDirSize() {
-    var list, i, switching, b, shouldSwitch, dir, switchcount = 0, c, d;
-    list = document.getElementById("list");
-    switching = true;
-    // Set the sorting direction to ascending:
-    dir = "asc";
-    // Make a loop that will continue until no switching has been done:
-    while (switching) {
-        // Start by saying: no switching is done:
-        switching = false;
-        b = list.getElementsByTagName("LI");
-        c = document.getElementsByClassName("sortsize");
-        //console.log(c[0].innerHTML);
-        //console.log(c[1].innerHTML);
-        // Loop through all list-items:
-        for (i = 0; i < (c.length - 1); i++) {
-            d = 0;
-            // Start by saying there should be no switching:
-            shouldSwitch = false;
-            /* Check if the next item should switch place with the current item,
-            based on the sorting direction (asc or desc): */
-            if (dir == "asc") {
-                d = i + 1;
-                if (c[i].innerHTML > c[d].innerHTML) {
-                    shouldSwitch = true;
-                    break;
-                }
-            } else if (dir == "desc") {
-                d = i + 1;
-                if (c[i].innerHTML < c[d].innerHTML) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
+                return 0;
+            })
         }
-        if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
-            b[i].parentNode.insertBefore(b[i + 1], b[i]);
-            switching = true;
-            // Each time a switch is done, increase switchcount by 1:
-            switchcount++;
-        } else {
-            /* If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && dir == "asc") {
-                dir = "desc";
-                switching = true;
-            }
-        }
-    }
-}
 
-//Sorting for list size
-function sortListDirName() {
-    var list, i, switching, b, shouldSwitch, dir, switchcount = 0, c, d;
-    list = document.getElementById("list");
-    switching = true;
-    // Set the sorting direction to ascending:
-    dir = "asc";
-    // Make a loop that will continue until no switching has been done:
-    while (switching) {
-        // Start by saying: no switching is done:
-        switching = false;
-        b = list.getElementsByTagName("LI");
-        c = document.getElementsByClassName("sortname");
-        //console.log(c[0].innerHTML);
-        //console.log(c[1].innerHTML);
-        // Loop through all list-items:
-        for (i = 0; i < (c.length - 1); i++) {
-            d = 0;
-            // Start by saying there should be no switching:
-            shouldSwitch = false;
-            /* Check if the next item should switch place with the current item,
-            based on the sorting direction (asc or desc): */
-            if (dir == "asc") {
-                d = i + 1;
-                if (c[i].innerHTML > c[d].innerHTML) {
-                    shouldSwitch = true;
-                    break;
-                }
-            } else if (dir == "desc") {
-                d = i + 1;
-                if (c[i].innerHTML < c[d].innerHTML) {
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-        }
-        if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
-            b[i].parentNode.insertBefore(b[i + 1], b[i]);
-            switching = true;
-            // Each time a switch is done, increase switchcount by 1:
-            switchcount++;
+
+        if (_.isEqual(mapped, orgArr) && dir == "asc") {
+            dir = "desc"
+            switching = true
         } else {
-            /* If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && dir == "asc") {
-                dir = "desc";
-                switching = true;
+            switching = false
+            for (var i = 0; i < mapped.length; i++) {
+                list.appendChild(tempListELe[mapped[i].index])
             }
         }
     }
