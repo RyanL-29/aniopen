@@ -1,4 +1,4 @@
-const version = "2.0.2"
+const version = "2.0.3"
 
 //Smooth scroll
 // document.write(`<script src="https://cdn.jsdelivr.net/gh/idiotWu/smooth-scrollbar@develop/dist/smooth-scrollbar.js"></script>`);
@@ -437,6 +437,7 @@ function list_files(path, files) {
 	            </a>
 	        </li>`;
         } else {
+            p = pProg.join('/')
             var k = p;
             var c = "file";
             if (item.name == "README.md") {
@@ -564,19 +565,19 @@ function file_code(path) {
     var name = path.split('/').pop();
     var ext = name.split('.').pop();
     var href = window.location.origin + path;
-    var rawshare = url.split('/');
+    var encodedLink = window.location.origin;
+    var linkComp = path.split('/');
+    for (i = 1; i < linkComp.length; i++) {
+        var pathcomp = decodeURIComponent(linkComp[i])
+        pathcomp = encodeURIComponent(pathcomp);
+        encodedLink = encodedLink + '/' + pathcomp;
+    }
+    encodedLink = encodedLink.replaceAll(/%25/g, "%");
     let fileName_mobile = ``
     if (screen.width < 570) {
-        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.html|.php|.css|.go|.java|.js|.json|.txt|.sh|.md/g, ""))}</p>`
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(linkComp.at(-1).replace(/.html|.php|.css|.go|.java|.js|.json|.txt|.sh|.md/g, ""))}</p>`
     }
-    var share = "";
-    for (i = 1; i < rawshare.length; i++) {
-        var pathcomp = decodeURIComponent(rawshare[i])
-        pathcomp = encodeURIComponent(pathcomp);
-        share = share + '/' + pathcomp;
-    }
-    var share2 = share.replaceAll(/%25/g, "%");
-    share2 = 'https:' + share2 + "?a=view";
+    var share = encodedLink + "?a=view";
     var content = `
 <div class="mdui-container">
 <pre id="editor"></pre>
@@ -585,10 +586,10 @@ function file_code(path) {
 ${fileName_mobile}
 <div class="mdui-textfield">
 	<label class="mdui-textfield-label">下載地址</label>
-	<input class="mdui-textfield-input" type="text" value="${href}"/>
+	<input class="mdui-textfield-input" type="text" value="${encodedLink}"/>
 </div>
-<button href="${share2}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
-<button onclick="javascript:location.href='${href}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
+<button href="${share}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
+<button onclick="javascript:location.href='${encodedLink}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
 <script src="https://cdn.staticfile.org/ace/1.4.7/ace.js"></script>
 <script src="https://cdn.staticfile.org/ace/1.4.7/ext-language_tools.js"></script>
 	`;
@@ -617,23 +618,21 @@ ${fileName_mobile}
 
 // 文件展示 视频 |mp4|webm|avi|
 function file_video(path) {
-    var url = window.location.origin + path;
-    var rawshare = url.split('/');
-    var share = "";
-    let fileName_mobile = ``
+    var linkComp = path.split('/');
+    var encodedLink = window.location.origin;
+    let fileName_mobile = ""
     if (screen.width < 570) {
-        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.mp4|.webm|.avi/g, ""))}</p>`
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(linkComp.at(-1).replace(/.mp4|.webm|.avi/g, ""))}</p>`
     }
-    for (i = 1; i < rawshare.length; i++) {
-        var pathcomp = decodeURIComponent(rawshare[i])
+    for (i = 1; i < linkComp.length; i++) {
+        var pathcomp = decodeURIComponent(linkComp[i])
         pathcomp = encodeURIComponent(pathcomp);
-        share = share + '/' + pathcomp;
+        encodedLink = encodedLink + '/' + pathcomp;
     }
-    var share2 = share.replaceAll(/%25/g, "%");
-    url = url.replaceAll(/%25/g, "%");
-    var subtitle = url.split(/(.mp4)|(.webm)|(.avi)/)[0] + '.vtt'
-    var vlc = 'vlc://https:' + share2;
-    share2 = 'https:' + share2 + "?a=view";
+    encodedLink = encodedLink.replaceAll(/%25/g, "%");
+    var subtitle = encodedLink.split(/(.mp4)|(.webm)|(.avi)/)[0] + '.vtt'
+    var vlc = 'vlc://' + encodedLink;
+    var share = encodedLink + "?a=view";
     var playBtn = `<a href="${vlc}"><button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-deep-purple-900"><i class="mdui-icon material-icons">&#xe038;</i> 在 VLC media player 中播放</button></a>`;
     var content = `
 <div class="mdui-container-fluid">
@@ -647,10 +646,10 @@ function file_video(path) {
 	<!-- 固定标签 -->
 	<div class="mdui-textfield">
 	  <label style="color:white;" class="mdui-textfield-label">下載地址</label>
-	  <input style="color:white;" class="mdui-textfield-input" type="text" value="${url}"/>
+	  <input style="color:white;" class="mdui-textfield-input" type="text" value="${encodedLink}"/>
 	</div>
-    <button href="${share2}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
-    <button onclick="javascript:location.href='${url}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
+    <button href="${share}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
+    <button onclick="javascript:location.href='${encodedLink}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
     <br>
 </div>
 	`;
@@ -666,7 +665,7 @@ function file_video(path) {
         autoplay: false,
         hotkey: true,
         video: {
-            url: url,
+            url: encodedLink,
             pic: 'https://raw.githubusercontent.com/RyanL-29/aniopen/master/background.png',
             type: 'auto',
         },
@@ -682,35 +681,34 @@ function file_video(path) {
 
 // 文件展示 音频 |mp3|m4a|wav|ogg|
 function file_audio(path) {
-    var url = window.location.origin + path;
-    var rawshare = url.split('/');
-    var share = "";
+    var linkComp = path.split('/');
+    var encodedLink = window.location.origin;
     let fileName_mobile = ``
     if (screen.width < 570) {
-        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.mp3|.m4a|.wav|.ogg/g, ""))}</p>`
+        fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(linkComp.at(-1).replace(/.mp3|.m4a|.wav|.ogg/g, ""))}</p>`
     }
-    for (i = 1; i < rawshare.length; i++) {
-        var pathcomp = decodeURIComponent(rawshare[i])
+    for (i = 1; i < linkComp.length; i++) {
+        var pathcomp = decodeURIComponent(linkComp[i])
         pathcomp = encodeURIComponent(pathcomp);
-        share = share + '/' + pathcomp;
+        encodedLink = encodedLink + '/' + pathcomp;
     }
-    var share2 = share.replaceAll(/%25/g, "%");
-    share2 = 'https:' + share2 + "?a=view";
+    encodedLink = encodedLink.replaceAll(/%25/g, "%");
+    var share = encodedLink + "?a=view";
     var content = `
 <div class="mdui-container-fluid">
 	<br>
 	<audio class="mdui-center" preload controls>
-	  <source src="${url}"">
+	  <source src="${encodedLink}"">
 	</audio>
 	<br>
     ${fileName_mobile}
 	<!-- 固定标签 -->
 	<div class="mdui-textfield">
 	  <label style="color:white;" class="mdui-textfield-label">下載地址</label>
-	  <input style="color:white;" class="mdui-textfield-input" type="text" value="${url}"/>
+	  <input style="color:white;" class="mdui-textfield-input" type="text" value="${encodedLink}"/>
 	</div>
-    <button href="${share2}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
-    <button onclick="javascript:location.href='${url}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
+    <button href="${share}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
+    <button onclick="javascript:location.href='${encodedLink}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
     <br>
 </div>
 	`;
@@ -720,32 +718,31 @@ function file_audio(path) {
 
 // 图片展示 bmp|jpg|jpeg|png|gif
 function file_image(path) {
-    var url = window.location.origin + path;
-    var rawshare = url.split('/');
-    var share = "";
-    let fileName_mobile = ``
+    var linkComp = path.split('/');
+    var encodedLink = window.location.origin;
+    let fileName_mobile = ""
     if (screen.width < 570) {
         fileName_mobile = `<p style="overflow-wrap: break-word;">${decodeURIComponent(rawshare.at(-1).replace(/.bmp|.jpg|.jpeg|.png|.gif/g, ""))}</p>`
     }
-    for (i = 1; i < rawshare.length; i++) {
-        var pathcomp = decodeURIComponent(rawshare[i])
+    for (i = 1; i < linkComp.length; i++) {
+        var pathcomp = decodeURIComponent(linkComp[i])
         pathcomp = encodeURIComponent(pathcomp);
-        share = share + '/' + pathcomp;
+        encodedLink = encodedLink + '/' + pathcomp;
     }
-    var share2 = share.replaceAll(/%25/g, "%");
-    share2 = 'https:' + share2 + "?a=view";
+    encodedLink = encodedLink.replaceAll(/%25/g, "%");
+    var share = encodedLink + "?a=view";
     var content = `
 <div class="mdui-container-fluid">
 	<br>
-	<img class="mdui-img-fluid" src="${url}"/>
+	<img class="mdui-img-fluid" src="${encodedLink}"/>
 	<br>
     ${fileName_mobile}
 	<div class="mdui-textfield">
 	  <label class="mdui-textfield-label">下載地址</label>
-	  <input class="mdui-textfield-input" type="text" value="${url}"/>
+	  <input class="mdui-textfield-input" type="text" value="${encodedLink}"/>
 	</div>
-    <button href="${share2}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
-    <button onclick="javascript:location.href='${url}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
+    <button href="${share}" id="copybt" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple" onClick="copyURI(event)"><i class="mdui-icon material-icons">share</i> Share</button>
+    <button onclick="javascript:location.href='${encodedLink}'" class="mdui-btn mdui-btn-raised mdui-btn-dense mdui-ripple mdui-color-theme-accent"><i class="mdui-icon material-icons">cloud_download</i> Download</button>
     <br>
 </div>
 	`;
