@@ -364,7 +364,7 @@ function list(path) {
 	<i class="mdui-icon material-icons icon-sort" data-sort="name" data-order="more">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-3 mdui-text-right" onclick="sortFileList('sortdate')">
-	     修改時間
+	     更新時間
 	<i class="mdui-icon material-icons icon-sort" data-sort="date" data-order="downward">expand_more</i>
 	    </div> 
 	    <div class="mdui-col-sm-2 mdui-text-right" onclick="sortFileList('sortsize')">
@@ -422,7 +422,7 @@ function list_files(path, files) {
         if (item['size'] == undefined) {
             item['size'] = "";
         }
-        item['modifiedTime'] = utc2HK(item['modifiedTime']);
+        item['createdTime'] = utc2HK(item['createdTime']);
         item['size'] = formatFileSize(item['size']);
         if (item['mimeType'] == 'application/vnd.google-apps.folder') {
             p = pProg.join('/') + '/'
@@ -431,7 +431,7 @@ function list_files(path, files) {
 	            <i class="mdui-icon material-icons">folder_open</i>
 	              ${item.name}
 	            </div>
-	            <div class="mdui-col-sm-3 mdui-text-right sortdate">${item['modifiedTime']}</div>
+	            <div class="mdui-col-sm-3 mdui-text-right sortdate">${item['createdTime']}</div>
 	            <div class="mdui-col-sm-2 mdui-text-right sortsize">${item['size']}</div>
                 <div class="mdui-col-sm-2 mdui-text-right"><a class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"></a></div>
 	            </a>
@@ -465,7 +465,7 @@ function list_files(path, files) {
                     <i class="mdui-icon material-icons">insert_drive_file</i>
                       ${item.name}
                     </div>
-                    <div class="mdui-col-sm-3 mdui-text-right sortdate">${item['modifiedTime']}</div>
+                    <div class="mdui-col-sm-3 mdui-text-right sortdate">${item['createdTime']}</div>
                     <div class="mdui-col-sm-2 mdui-text-right sortsize">${item['size']}</div>
                     <div class="mdui-col-sm-2 mdui-text-right"><a href="${k}" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"><i class="mdui-icon material-icons">cloud_download</i></a></div>
                     </a>
@@ -477,7 +477,7 @@ function list_files(path, files) {
                     <i class="mdui-icon material-icons">video_library</i>
                       ${item.name}
                     </div>
-                    <div class="mdui-col-sm-3 mdui-text-right sortdate">${item['modifiedTime']}</div>
+                    <div class="mdui-col-sm-3 mdui-text-right sortdate">${item['createdTime']}</div>
                     <div class="mdui-col-sm-2 mdui-text-right sortsize">${item['size']}</div>
                     <div class="mdui-col-sm-2 mdui-text-right"><a href="${k}" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"><i class="mdui-icon material-icons">cloud_download</i></a></div>
                     </a>
@@ -492,7 +492,7 @@ function list_files(path, files) {
                     <i class="mdui-icon material-icons">insert_drive_file</i>
                       ${item.name}
                     </div>
-                    <div class="mdui-col-sm-3 mdui-text-right sortdate">${item['modifiedTime']}</div>
+                    <div class="mdui-col-sm-3 mdui-text-right sortdate">${item['createdTime']}</div>
                     <div class="mdui-col-sm-2 mdui-text-right sortsize">${item['size']}</div>
                     <div class="mdui-col-sm-2 mdui-text-right"><a href="${k}" class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white"><i class="mdui-icon material-icons">cloud_download</i></a></div>
                     </a>
@@ -507,7 +507,7 @@ function list_files(path, files) {
 
 
 function get_file(path, file, callback) {
-    var key = "file_path_" + path + file['modifiedTime'];
+    var key = "file_path_" + path + file['createdTime'];
     var data = localStorage.getItem(key);
     if (data != undefined) {
         return callback(data);
